@@ -13,6 +13,7 @@ const App = () => {
          Magnanimo
       </Button>
       <Teste />
+      <Main />
     </div>
   );
 }

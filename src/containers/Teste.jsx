@@ -14,9 +14,9 @@ class Teste extends Component {
     render() {
         return (
             <div>
-                <button onClick={this.incrementaEstado} >
+                <Button click={this.incrementaEstado} >
                     Incrementa Contador
-                </button>
+                </Button>
                 {this.state.contador}
 
                 {/* <Button cor="white" fundo="green" >
