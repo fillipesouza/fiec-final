@@ -20,7 +20,6 @@ export class CadastroFusca extends Component {
         const name = event.target.name;
         const value = event.target.value;
         formulario[name] = value;
-        console.log(formulario);
         this.setState({formulario});
     }
 
