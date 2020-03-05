@@ -1,13 +1,37 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import { validaCampos } from '../utils/validacao';
 
 export class CadastroFusca extends Component {
 
     state = {
         formulario: {
-            img: '',
-            descricao: ''
+            img: {
+                valor: '',
+                ehValido: false,
+                tocado: false,
+                validacoes: {
+                    obrigatorio: true
+                }
+            },
+            descricao: {
+                valor: '',
+                ehValido: false,
+                tocado: false,
+                validacoes: {
+                    obrigatorio: true
+                }
+            }
+        },
+        formValido: false
+    }
+
+    checarFormulario = (formulario) => {
+        let formValido = true;
+        for(let dado in formulario){
+            formValido = formValido && formulario[dado].ehValido;
         }
+        return formValido;
     }
 
     cadastrar = async (event) => {
@@ -17,10 +41,20 @@ export class CadastroFusca extends Component {
 
     handleChange = (event) => {
         const formulario = { ...this.state.formulario};
+        // Atualizo o valor do estado conforme o input do form
         const name = event.target.name;
         const value = event.target.value;
-        formulario[name] = value;
-        this.setState({formulario});
+        formulario[name].valor = value;
+        formulario[name].tocado = true;
+
+        // Valida os campos e o formulário
+        const erros = validaCampos(value, formulario[name].validacoes);
+        formulario[name].ehValido = (erros.length == 0);
+        
+        const formValido = this.checarFormulario(formulario);
+
+        // Atualizo o estado do formulario e dos campos
+        this.setState({formulario, formValido});
     }
 
     render() {
@@ -39,7 +73,7 @@ export class CadastroFusca extends Component {
                    class="form-control" name="img" id="img" aria-describedby="helpId" placeholder="" />
                   <small id="helpId" class="form-text text-muted">URL da Imagem</small>
                 </div>
-                <button onClick={this.cadastrar} type="submit" class="btn btn-primary">Submit</button>
+                <button disabled={!this.state.formValido} onClick={this.cadastrar} type="submit" class="btn btn-primary">Submit</button>
             </form>   
             </div>
         )
