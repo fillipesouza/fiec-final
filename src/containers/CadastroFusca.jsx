@@ -1,23 +1,30 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import { validaCampos } from '../utils/validacao';
+import Input from '../utils/Input';
 
 export class CadastroFusca extends Component {
 
     state = {
         formulario: {
             img: {
+                type: 'text',
+                titulo: 'Imagem aqui',
                 valor: '',
                 ehValido: false,
                 tocado: false,
+                erros: [],
                 validacoes: {
                     obrigatorio: true
                 }
             },
             descricao: {
+                type: 'text',
+                titulo: 'Descricao aqui',
                 valor: '',
                 ehValido: false,
                 tocado: false,
+                erros: [],
                 validacoes: {
                     obrigatorio: true
                 }
@@ -49,6 +56,7 @@ export class CadastroFusca extends Component {
 
         // Valida os campos e o formulário
         const erros = validaCampos(value, formulario[name].validacoes);
+        formulario[name].erros = erros;
         formulario[name].ehValido = (erros.length == 0);
         
         const formValido = this.checarFormulario(formulario);
@@ -61,18 +69,16 @@ export class CadastroFusca extends Component {
         return (
             <div>
             <form>
-                <div class="form-group">
-                  <label for="descricao">Descricao</label>
-                  <input type="text" onChange={this.handleChange}
-                    class="form-control" name="descricao" id="descricao" aria-describedby="helpId" placeholder="" />
-                  <small id="helpId" class="form-text text-muted">Descricao</small>
-                </div>
-                <div class="form-group">
-                  <label for="img">Imagem</label>
-                  <input type="text" onChange={this.handleChange}
-                   class="form-control" name="img" id="img" aria-describedby="helpId" placeholder="" />
-                  <small id="helpId" class="form-text text-muted">URL da Imagem</small>
-                </div>
+                {Object.keys(this.state.formulario).map(dado => {
+                    const input = this.state.formulario[dado];
+                    return (
+                    <Input change={this.handleChange} 
+                         id={dado} name={dado} titulo={input.titulo}
+                         tocado={input.tocado} ehValido={input.ehValido}
+                         erros = {input.erros}
+                        />
+                    )
+                })}
                 <button disabled={!this.state.formValido} onClick={this.cadastrar} type="submit" class="btn btn-primary">Submit</button>
             </form>   
             </div>
