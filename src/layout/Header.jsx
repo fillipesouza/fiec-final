@@ -1,14 +1,19 @@
-import React from 'react'
-import { Button } from 'reactstrap'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 const Header = (props) => {
-    const nome = props.nome.toUpperCase();
     return (
-    <header>
-        {nome} Legal 
-        <Button color="primary" className="mr-2">Test Primário</Button>
-        <br />
-    </header>
+        <div>
+            <ul className="nav justify-content-center">
+                <li className="nav-item">
+                    <Link className="nav-link" to="/fuscas">Fuscas</Link>
+                </li>
+                <li className="nav-item">
+                    <Link className="nav-link" to="/cadastro">Cadastro</Link>
+                </li>
+               
+            </ul>
+        </div>
     )
 }
 
