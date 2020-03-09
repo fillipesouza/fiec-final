@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import Fusca from './layout/Fusca';
-import axios from 'axios';
+import axios from './utils/meuaxios';
 import CadastroFusca from './containers/CadastroFusca';
 
 export class App extends Component {
@@ -10,26 +10,26 @@ export class App extends Component {
   }
 
   async componentDidMount() {
-    const res = await axios.get('http://localhost:38000/fuscas');
+    const res = await axios.get('/fuscas');
     this.setState({fuscas: res.data})  
   }
 
   deletar = async (i) => {            
-    await axios.delete('http://localhost:38000/fuscas/'+i);   
+    await axios.delete('/fuscas/'+i);   
     //this.setState({ atualizacoes: this.state.atualizacoes+1 });
-    const res = await axios.get('http://localhost:38000/fuscas');
+    const res = await axios.get('/fuscas');
     this.setState({fuscas: res.data}) 
   }
 
   inserir = async () => {
-    await axios.post('http://localhost:38000/fuscas');   
+    await axios.post('/fuscas');   
     //this.setState({ atualizacoes: this.state.atualizacoes+1 });
-    const res = await axios.get('http://localhost:38000/fuscas');
+    const res = await axios.get('/fuscas');
     this.setState({fuscas: res.data}) 
   }
 
   async componentDidUpdate(){
-    //const res = await axios.get('http://localhost:38000/fuscas');
+    //const res = await axios.get('/fuscas');
     //this.setState({fuscas: res.data}) 
   }
 

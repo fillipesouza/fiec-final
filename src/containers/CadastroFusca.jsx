@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import axios from 'axios';
+import axios from '../utils/meuaxios';
 import { validaCampos } from '../utils/validacao';
 import Input from '../utils/Input';
 
@@ -43,7 +43,7 @@ export class CadastroFusca extends Component {
 
     cadastrar = async (event) => {
         event.preventDefault();
-        await axios.post('http://localhost:38000/fuscas', this.state.formulario)
+        await axios.post('/fuscas', this.state.formulario)
     }
 
     handleChange = (event) => {
